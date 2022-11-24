@@ -1,5 +1,4 @@
 let alarma = 0
-let minutos = 1
 pins.servoWritePin(AnalogPin.P16, 0)
 loops.everyInterval(60000, function () {
     if (ESP8266_IoT.wifiState(true)) {
@@ -27,16 +26,16 @@ basic.forever(function () {
         ESP8266_IoT.connectWifi("wiot", "a1b2c3d4")
     }
     basic.showIcon(IconNames.Yes)
-    if (Environment.PIR(DigitalPin.P2) && alarma == 0) {
-        pins.servoWritePin(AnalogPin.P16, 90)
+    if (Environment.PIR(DigitalPin.P2)) {
         alarma = 1
+        pins.servoWritePin(AnalogPin.P16, 90)
         basic.showIcon(IconNames.Skull)
         basic.pause(120000)
     } else {
         if (alarma == 1) {
             pins.servoWritePin(AnalogPin.P16, 0)
-            alarma = 0
             basic.pause(5000)
+            alarma = 0
         }
     }
 })
